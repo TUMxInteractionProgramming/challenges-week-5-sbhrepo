@@ -182,7 +182,7 @@ function listChannels(criterion) {
     } else if (criterion == "favorites") {
         channels.sort(compareFavorites);
     } else {
-        console.log('You fucked it up, the criterion is:', criterion);
+        console.log('You fucked it up, the criterion is: [' + criterion+ ']');
     }
     $('#channels ul').empty();
     var i;
