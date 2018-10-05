@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>chatter|app</title>
@@ -19,6 +19,9 @@
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
+    <!-- embed external JavaScript emojis file for app interaction -->
+    <script src="js/emojis-list.js"></script>
+
     <!-- #7 embed external JavaScript file for channel objects -->
     <script src="js/channels.js"></script>
 
@@ -28,11 +31,10 @@
 </head>
 
 <!-- #8 #channel #onload all channels when the body has loaded -->
-<body onload="listChannels()">
+<body onload="listChannels('new')">
 
 <!-- channel area -->
-<div id="channels">
-
+<div id="channels" class="md-whiteframe-20dp">
     <!-- APP BAR for APP TITLE -->
     <h1 id="left-app-bar">
         <img src="http://ip.lfe.mw.tum.de/sections/moocus.png" alt="Moocus, the chatty duck!" style="height: 56px;">
@@ -92,57 +94,60 @@
        
     </ul>
 
+
     <!-- TAB BAR -->
-    <div id="tab-bar">
-        <button class="selected" id="tab-new" onclick="selectTab('#tab-new')">
+    <div id="tab-bar" class="md-whiteframe-6dp">
+        <button class="selected" id="tab-new" onclick="selectTab('#tab-new'); listChannels('new')">
             <!-- #7  replacing icons -->
             <i class="far fa-lightbulb"></i>
             New
         </button>
-        <button id="tab-trending" onclick="selectTab('#tab-trending')">
+        <button id="tab-trending" onclick="selectTab('#tab-trending'); listChannels('trending')">
             <!-- #7  replacing icons -->
             <i class="fas fa-fire"></i>
             Trending
         </button>
-        <button id="tab-favorites" onclick="selectTab('#tab-favorites')">
+        <button id="tab-favorites" onclick="selectTab('#tab-favorites'); listChannels('favorites')">
             <!-- #7  replacing icons -->
             <i class="fas fa-star"></i>
             Favorites
         </button>
+        <span class="dot plus accent" onclick="createNewChannel()"></span>
     </div>
 </div>
 
-<div id="chat">
+<div id="chat" class="md-whiteframe-6dp">
 
     <!-- APP BAR for CHANNEL TITLE -->
-    <h1>
+    <h1 id="rightAppBar">
         <span id="channel-name">#SevenContinents</span>
         <small id="channel-location">by <strong>cheeses.yard.applies</strong></small>
         <!-- #7 star is now font-awesome -->
         <i class="fas fa-star" onclick="star()"></i>
     </h1>
 
-    <div id="messages">
+    <div id="messages" class="md-whiteframe-6dp">
 
+        <!--
         <div class="message own">
             <h3><a href="http://w3w.co/cheeses.yard.applies" target="_blank"><strong>cheeses.yard.applies</strong></a>
                 Wed, June 20th, 13:37 <em>15 min. left</em></h3>
             <p>What's the place you folks call home?</p>
-            <button>+5 min.</button>
+            <button class="accent">+5 min.</button>
         </div>
 
         <div class="message">
             <h3><a href="http://w3w.co/truck.cotton.zone" target="_blank"><strong>truck.cotton.zone</strong></a>
                 Wed, June 20th, 13:39 <em>4 min. left</em></h3>
             <p>BRISBANE! Hang loose!</p>
-            <button>+5 min.</button>
+            <button class="accent">+5 min.</button>
         </div>
 
         <div class="message">
             <h3><a href="http://w3w.co/thus.best.dishes" target="_blank"><strong>thus.best.dishes</strong></a>
                 Wed, June 20th, 14:02 <em>12 min. left</em></h3>
             <p>The big apple.</p>
-            <button>+5 min.</button>
+            <button class="accent">+5 min.</button>
         </div>
 
         <div class="message">
@@ -150,7 +155,7 @@
                    target="_blank"><strong>driveway.helper.magazine</strong></a>
                 Wed, June 20th, 14:02 <em>7 min. left</em></h3>
             <p>Eu sou um Cariocas.</p>
-            <button>+5 min.</button>
+            <button class="accent">+5 min.</button>
         </div>
 
         <div class="message">
@@ -158,7 +163,7 @@
                    target="_blank"><strong>escapes.pitch.saucepan</strong></a>
                 Wed, June 20th, 14:07 <em>14 min. left</em></h3>
             <p>Greetings from the western cape!</p>
-            <button>+5 min.</button>
+            <button class="accent">+5 min.</button>
         </div>
 
         <div class="message">
@@ -166,23 +171,26 @@
                    target="_blank"><strong>meanings.identity.pays</strong></a>
                 Wed, June 20th, 04:08 <em>15 min. left</em></h3>
             <p>北京</p>
-            <button>+5 min.</button>
+            <button class="accent">+5 min.</button>
         </div>
-
+        -->
     </div>
 
     <!-- ChAT BAR -->
-    <div id="chat-bar">
-        <button id="emojis-button" onclick="toggleEmojis()">
+    <div id="chat-bar" class="md-whiteframe-6dp">
+        <button class="primary-blue" id="emojis-button" onclick="toggleEmojis()">
             <!-- #7 replacing icons -->
             <i class="far fa-smile"></i>
         </button>
-        <div id="emojis">&#x1F601; &#x1F602; &#x1F603; &#x1F604; &#x1F605; &#x1F606; &#x1F607;</div>
+        <!-- <div id="emojis">&#x1F601; &#x1F602; &#x1F603; &#x1F604; &#x1F605; &#x1F606; &#x1F607;</div> -->
+        <div id="emojis">
+            <!--<script>var emojis = require('emojis-list')console.log(emojis[0])</script> -->
+        </div>
         <!-- #8 create a new input element which accepts text and has a prefill as well as a character limit.
                It also gets an id -->
         <input type="text" placeholder="Message..." maxlength="140" id="message">
         <!-- #8 send message requires a button -->
-        <button onclick="sendMessage()"><i class="fas fa-arrow-right"></i></button>
+        <button class="accent sendButton" onclick="sendMessage()"><i class="fas fa-arrow-right"></i></button>
     </div>
 </div>
 
